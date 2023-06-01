@@ -11,3 +11,5 @@ Reasons why multiprocessing implementation can be slower:
 4. **Limited resources:** Although multiprocessing can help speed up processing, this doesn't mean that there are no limited resources, such as the number of available CPU cores or the amount of memory available. If the system is overloaded with too many processes or tasks that require too much memory, overall performance may suffer.
 
 In summary, multiprocessing may not always be the best solution to improve program execution speed, and its use should be carefully considered and adjusted for each particular case.
+## CPU performance
+![CPU Usage](img/multiprocessing_cpu.png "CPU Usage")

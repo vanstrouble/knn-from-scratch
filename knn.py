@@ -5,6 +5,7 @@ from multiprocessing import Pool, cpu_count
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_iris, load_breast_cancer
+from tensorflow.keras.datasets import mnist
 
 
 class KNN:
@@ -47,7 +48,7 @@ class KNN:
             pool_processes = [
                 p.apply_async(self._predict, args=(x, i))
                 for x in X_test
-                for i in indices
+                for i in indices[:cpu]
             ]
             predictions = []
             for i, p_process in enumerate(pool_processes):
@@ -81,6 +82,16 @@ if __name__ == "__main__":
     # cancer = load_breast_cancer()
     # X, y = cancer.data, cancer.target
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
+
+    # MNIST
+    # (X_train, y_train), (X_test, y_test) = mnist.load_data()
+    # # Aplanar las imágenes
+    # X_train = X_train.reshape(-1, 784)
+    # X_test = X_test.reshape(-1, 784)
+
+    # # Normalizar los datos
+    # X_train = X_train / 255.0
+    # X_test = X_test / 255.0
 
     # Normal KNN without multiprocessing
     start = time.time()

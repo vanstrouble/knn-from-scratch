@@ -5,15 +5,18 @@ from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_iris
 
+
 def knn_predict(X_train, y_train, x, k):
     distances = [np.linalg.norm(x - x_train) for x_train in X_train]
     k_indices = np.argsort(distances)[:k]
     k_labels = y_train[k_indices]
     return Counter(k_labels).most_common()[0][0]
 
+
 def mp_knn_predict(args):
     x, X_train, y_train, k = args
     return knn_predict(X_train, y_train, x, k)
+
 
 def evaluate(predictions, y_test):
     accuracy = np.sum(predictions == y_test) / len(y_test)

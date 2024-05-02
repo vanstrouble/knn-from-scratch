@@ -44,6 +44,8 @@ class KNN:
             return data.values
         elif isinstance(data, np.ndarray):
             return data
+        elif isinstance(data, list):
+            return np.array(data)
         else:
             raise ValueError("Input data must be a pandas DataFrame or numpy array.")
 

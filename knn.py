@@ -32,7 +32,7 @@ class KNN:
 
     def _compute_distances(self, x):
         """Calculate distances between two points"""
-        distances = [np.linalg.norm(x - x_train) for x_train in self.X_train]
+        distances = np.linalg.norm(self.X_train - x, axis=1)
         k_indices = np.argsort(distances)[: self.k]
         k_labels = self.y_train[k_indices]
         most_common = Counter(k_labels).most_common()[0][0]

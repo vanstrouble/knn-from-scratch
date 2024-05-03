@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 
 from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_classification
 from multiprocessing import Pool
 from collections import Counter
 
@@ -51,52 +52,15 @@ class KNN:
 
 
 if __name__ == "__main__":
-    a = np.random.multivariate_normal([10, 0], [[3, 1], [1, 4]], size=100)
-    a_label = np.ones(len(a))
-
-    b = np.random.multivariate_normal([0, 20], [[3, 1], [1, 4]], size=50)
-    b_label = 2 * np.ones(len(b))
-
-    c = np.random.multivariate_normal([5, 18], [[1, 0], [0, 1]], size=70)
-    c_label = 3 * np.ones(len(c))
-
-    d = np.random.multivariate_normal([5, 0], [[1, 0], [0, 1]], size=30)
-    d_label = 4 * np.ones(len(d))
-
-    X = np.concatenate((a, b, c, d))
-    y = np.concatenate((a_label, b_label, c_label, d_label)).astype(int)
-
-    colors = ['red', 'green', 'blue', 'orange']
-
-    # plt.figure(figsize=(8, 6))
-
-    for i in range(1, 5):
-
-        points = X[y == i]
-
-    #     plt.scatter(points[:, 0], points[:, 1], color=colors[i-1], label=f'Conjunto {chr(96+i)} (etiqueta {i})')
-
-    # plt.title('Labeled data sets')
-    # plt.xlabel('Feature 1')
-    # plt.ylabel('Feature 2')
-    # plt.legend()
-    # plt.grid(True)
-    # plt.show()
+    X, y = make_classification(n_samples=1000, n_features=10, n_classes=4, n_clusters_per_class=1)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    model = KNN(k=100)
+    model = KNN(k=5)
     model.fit(X_train, y_train)
-    predictions = model.predict(X_test)
+    pred = model.predict(X_test, False)
 
-    acc = np.sum(predictions == y_test) / len(y_test)
+    acc = np.sum(pred == y_test) / len(y_test)
     print(acc)
 
-    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=plt.cm.Paired, label='Training Points')
-    plt.scatter(X_test[:, 0], X_test[:, 1], marker='x', c=predictions, label='Test Points')
-    plt.xlabel('Feature 1')
-    plt.ylabel('Feature 2')
-    plt.title('KNN Test Points')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    colors = ['black', 'red', 'blue', 'orange', 'green']

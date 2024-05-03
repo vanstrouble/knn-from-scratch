@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
-from sklearn.model_selection import train_test_split
-from sklearn.datasets import make_classification
 from multiprocessing import Pool
 from collections import Counter
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_classification
+from sklearn.metrics import accuracy_score, classification_report, f1_score
 
 
 class KNN:
@@ -48,19 +48,31 @@ class KNN:
         elif isinstance(data, list):
             return np.array(data)
         else:
-            raise ValueError("Input data must be a pandas DataFrame or numpy array.")
+            raise ValueError("Input data must be a numpy array.")
 
 
 if __name__ == "__main__":
-    X, y = make_classification(n_samples=1000, n_features=10, n_classes=4, n_clusters_per_class=1)
+    X, y = make_classification(
+        n_samples=1000,
+        n_features=5,
+        n_informative=3,
+        n_classes=2,
+        flip_y=0.1,
+        class_sep=0.5,
+    )
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    model = KNN(k=5)
+    n_neighbors = 3
+
+    model = KNN(k=n_neighbors)
     model.fit(X_train, y_train)
-    pred = model.predict(X_test, False)
+    y_pred = model.predict(X_test, False)
 
-    acc = np.sum(pred == y_test) / len(y_test)
-    print(acc)
+    # for index, element in enumerate(y_pred):
+    #     print(f'{X_test[index]}, pred: {element}, expected: {y_test[index]}')
 
-    colors = ['black', 'red', 'blue', 'orange', 'green']
+    print("")
+    print(classification_report(y_test, y_pred))
+    print("Accuracy score: ", round(accuracy_score(y_test, y_pred), 2))
+    print("F1 score: ", round(f1_score(y_test, y_pred), 2))

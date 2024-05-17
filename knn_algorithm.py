@@ -29,7 +29,7 @@ class KNN:
             return results
         else:
             y_pred = [self._compute_distances(x_test) for x_test in X_test]
-            return y_pred
+            return np.array(y_pred)
 
     def _compute_distances(self, x):
         """Calculate distances between two points"""

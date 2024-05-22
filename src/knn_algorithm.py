@@ -18,6 +18,7 @@ class KNN:
         """Fit function to lazy lerarning"""
         self.X_train = self._ensure_array(X_train)
         self.y_train = self._ensure_array(y_train)
+        return self
 
     def predict(self, X_test, multi=False):
         """Predict function"""

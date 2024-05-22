@@ -1,11 +1,11 @@
+import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+from sklearn.metrics import confusion_matrix
 
 
-def plot_knn_pca(
-    X_train, y_train, X_test, y_pred,
-    ds_name
-):
+def plot_knn_pca(X_train, y_train, X_test, y_pred, ds_name):
+    """Plot KNN classification with PCA on 2D data."""
     title = "KNN Classification with PCA on " + ds_name
 
     # Reduce dimensionality to 2D using PCA
@@ -51,8 +51,26 @@ def plot_knn_pca(
         loc="upper right"
     )
 
-    # Etiquetas y título
+    # Labels and title
     plt.xlabel("PCA Component 1")
     plt.ylabel("PCA Component 2")
     plt.title(title)
+    plt.show()
+
+
+def plot_confusion_matrix(y_test, y_pred, labels):
+    """Plot confusion matrix using seaborn heatmap."""
+    cm = confusion_matrix(y_test, y_pred)
+    plt.figure()
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=labels,
+        yticklabels=labels
+    )
+    plt.xlabel("Predicted label")
+    plt.ylabel("True label")
+    plt.title("Confusion Matrix")
     plt.show()

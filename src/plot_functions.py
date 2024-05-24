@@ -74,3 +74,82 @@ def plot_confusion_matrix(y_test, y_pred, labels):
     plt.ylabel("True label")
     plt.title("Confusion Matrix")
     plt.show()
+
+
+def plot_f1_score(
+        max_k, f1_scores,
+        sklearn_f1_scores=None,
+        plot_title="F1 Score",
+        ):
+    sns.set_context("notebook", rc={"lines.linewidth": 3})
+    sns.set_style("ticks")
+
+    plt.figure(figsize=(10, 6))
+
+    palette = sns.color_palette("flare", 2)
+    custom_color = palette[0]
+    sklearn_color = palette[1]
+
+    if sklearn_f1_scores is not None:
+        plt.plot(
+            range(1, max_k + 1),
+            sklearn_f1_scores,
+            color=sklearn_color,
+            label="sklearn KNN",
+            marker=".",
+        )
+    plt.plot(
+        range(1, max_k + 1),
+        f1_scores,
+        color=custom_color,
+        label="Custom KNN",
+        marker=".",
+        )
+
+    plt.title(plot_title, fontsize=14, weight="bold")
+    plt.xlabel("K neighbors", fontsize=12)
+    plt.ylabel("F1-Score", fontsize=12)
+    plt.legend(title="Model", title_fontsize="12", fontsize="11")
+
+    sns.despine()
+    plt.show()
+
+
+def plot_elbow(
+        max_k,
+        error_rates,
+        sklearn_error_rates=None,
+        plot_title="Elbow Method Comparison"
+        ):
+    sns.set_context("notebook", rc={"lines.linewidth": 3})
+    sns.set_style("ticks")
+
+    plt.figure(figsize=(10, 6))
+
+    palette = sns.color_palette("BuPu", 2)
+    custom_color = palette[0]
+    sklearn_color = palette[1]
+
+    if sklearn_error_rates is not None:
+        plt.plot(
+            range(1, max_k + 1),
+            sklearn_error_rates,
+            color=sklearn_color,
+            label="sklearn KNN",
+            marker=".",
+        )
+    plt.plot(
+        range(1, max_k + 1),
+        error_rates,
+        color=custom_color,
+        label="Custom KNN",
+        marker="."
+        )
+
+    plt.title(plot_title, fontsize=14, weight="bold")
+    plt.xlabel("K neighbors", fontsize=12)
+    plt.ylabel("Error Rate", fontsize=12)
+    plt.legend(title="Model", title_fontsize="12", fontsize="11")
+
+    sns.despine()
+    plt.show()

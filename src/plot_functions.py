@@ -80,7 +80,7 @@ def plot_knn_pca(X_train, y_train, X_test, y_pred, ds_name):
 def plot_confusion_matrix(y_test, y_pred, labels):
     """Plot confusion matrix using seaborn heatmap."""
     cm = confusion_matrix(y_test, y_pred)
-    plt.figure()
+    plt.figure(figsize=(8, 5))
     sns.heatmap(
         cm,
         annot=True,
@@ -89,9 +89,9 @@ def plot_confusion_matrix(y_test, y_pred, labels):
         xticklabels=labels,
         yticklabels=labels
     )
-    plt.xlabel("Predicted label")
-    plt.ylabel("True label")
-    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted label", fontsize=12)
+    plt.ylabel("True label", fontsize=12)
+    plt.title("Confusion Matrix", fontsize=14, weight="bold")
     plt.show()
 
 

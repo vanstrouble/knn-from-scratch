@@ -13,15 +13,30 @@ def plot_knn_pca(X_train, y_train, X_test, y_pred, ds_name):
     X_train_2d = pca.fit_transform(X_train)
     X_test_2d = pca.transform(X_test)
 
+    # Configure context and style
+    # sns.set_context("talk")
+    sns.set_context("notebook", rc={"lines.linewidth": 3})
+    sns.set_style("whitegrid")
+
     # Create figure
-    plt.figure()
+    plt.figure(figsize=(8, 5))
+
+    # Color palette
+    train_palette = sns.color_palette(
+        "viridis",
+        as_cmap=True,
+        )
+    test_palette = sns.color_palette(
+        "coolwarm",
+        as_cmap=True
+        )
 
     # Plot training points
     scatter_train = plt.scatter(
         X_train_2d[:, 0],
         X_train_2d[:, 1],
         c=y_train,
-        cmap="viridis",
+        cmap=train_palette,
         marker="o",
         edgecolor="k",
         alpha=0.7,
@@ -33,7 +48,7 @@ def plot_knn_pca(X_train, y_train, X_test, y_pred, ds_name):
         X_test_2d[:, 0],
         X_test_2d[:, 1],
         c=y_pred,
-        cmap="coolwarm",
+        cmap=test_palette,
         marker="s",
         edgecolor="k",
         label="Test predictions",
@@ -42,19 +57,23 @@ def plot_knn_pca(X_train, y_train, X_test, y_pred, ds_name):
     # Create legend
     legend1 = plt.legend(
         *scatter_train.legend_elements(),
-        title="Training Classes"
+        title="Training Classes",
+        loc="upper left",
+        fontsize="11",
     )
     plt.gca().add_artist(legend1)
     plt.legend(
         *scatter_test.legend_elements(),
         title="Test Predictions",
-        loc="upper right"
+        loc="upper right",
+        fontsize="11",
     )
 
     # Labels and title
-    plt.xlabel("PCA Component 1")
-    plt.ylabel("PCA Component 2")
-    plt.title(title)
+    plt.xlabel("PCA Component 1", fontsize=12)
+    plt.ylabel("PCA Component 2", fontsize=12)
+    plt.title(title, fontsize=14, weight="bold")
+    sns.despine()
     plt.show()
 
 
@@ -84,7 +103,7 @@ def plot_f1_score(
     sns.set_context("notebook", rc={"lines.linewidth": 3})
     sns.set_style("ticks")
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(8, 5))
 
     palette = sns.color_palette("flare", 2)
     custom_color = palette[0]
@@ -124,7 +143,7 @@ def plot_elbow(
     sns.set_context("notebook", rc={"lines.linewidth": 3})
     sns.set_style("ticks")
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(8, 5))
 
     palette = sns.color_palette("BuPu", 2)
     custom_color = palette[0]
